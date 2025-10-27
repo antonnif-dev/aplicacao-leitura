@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { supabase } from '../services/supabase'; // Para chamar as funções de update
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/services/supabase'; // Para chamar as funções de update
 
 // Componentes UI e Ícones
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+//import { Separator } from '@/components/ui/separator';
 import { Loader2, ArrowLeft } from 'lucide-react';
 
 export function AjustesPage() {
-  const { user, session } = useAuth(); // Pega o usuário e a sessão
+  //const { user, session } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Estados para o formulário de perfil
@@ -23,7 +24,7 @@ export function AjustesPage() {
   const [successProfile, setSuccessProfile] = useState<string | null>(null);
 
   // Estados para o formulário de senha
-  const [currentPassword, setCurrentPassword] = useState(''); // Não vamos usar a senha atual para updateUser
+  //const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loadingPassword, setLoadingPassword] = useState(false);
@@ -87,7 +88,7 @@ export function AjustesPage() {
 
       setSuccessPassword('Senha atualizada com sucesso!');
       // Limpa os campos de senha
-      setCurrentPassword('');
+      //setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
        // Limpar mensagem após alguns segundos

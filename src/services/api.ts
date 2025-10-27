@@ -1,9 +1,14 @@
 import axios from "axios";
 import { supabase } from './supabase';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+if (!apiUrl) {
+  console.error('ERRO CRÍTICO: Variável de ambiente VITE_API_URL não definida no arquivo .env');
+}
+console.log("Frontend (local) configurado para usar a API em:", apiUrl);
+
 const api = axios.create({
-  baseURL: "http://localhost:3000",
-  //baseURL: process.env.REACT_APP_API_URL,
+  baseURL: apiUrl,
 });
 
 api.interceptors.request.use(

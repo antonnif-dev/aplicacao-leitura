@@ -1,4 +1,4 @@
-import * as React from "react"
+//import * as React from "react"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -16,5 +16,5 @@ export function formatDate(input: string | number): string {
 }
 
 export function absoluteUrl(path: string) {
-  return `${process.env.NEXT_PUBLIC_APP_URL}${path}`
+  return `${import.meta.env.VITE_APP_URL}${path}`
 }

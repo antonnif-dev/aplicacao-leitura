@@ -94,7 +94,7 @@ export function LoginPage() {
 
     try {
       // Chama a rota POST /usuarios do seu backend
-      const response = await api.post('/usuarios', {
+      await api.post('/usuarios', {
         nome: regNome,
         email: regEmail,
         senha: regSenha, // O backend cuidará do hash
@@ -234,7 +234,7 @@ export function LoginPage() {
                 </div>
                 <DialogFooter>
                   <DialogClose asChild>
-                     <Button type="button" variant="ghost" disabled={loadingRegister}>Cancelar</Button>
+                    <Button type="button" variant="ghost" disabled={loadingRegister}>Cancelar</Button>
                   </DialogClose>
                   <Button type="submit" disabled={loadingRegister}>
                     {loadingRegister && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
