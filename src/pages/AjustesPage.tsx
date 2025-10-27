@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+//import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/services/supabase';
 import { LogOut, LayoutDashboard, CalendarDays, Settings } from 'lucide-react';
@@ -10,7 +11,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 //import { Separator } from '@/components/ui/separator';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Dialog } from '@/components/ui/dialog';
 
 export function AjustesPage() {
@@ -20,7 +21,7 @@ export function AjustesPage() {
 
   // Estados para o formulário de perfil
   const [nome, setNome] = useState(user?.user_metadata?.nome_completo || '');
-  const [email, setEmail] = useState(user?.email || '');
+  const [email] = useState(user?.email || '');
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [errorProfile, setErrorProfile] = useState<string | null>(null);
   const [successProfile, setSuccessProfile] = useState<string | null>(null);
@@ -120,9 +121,11 @@ export function AjustesPage() {
       <header className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl sm:text-3xl font-bold">Ajustes do Perfil</h1>
         {/* Botão logout */}
+        <Dialog>
           <Button variant="outline" size="icon" onClick={handleLogout} className="flex-shrink-0" aria-label="Sair"> {/* Adicionado aria-label */}
             <LogOut className="h-4 w-4 ml-1" />
           </Button>
+        </Dialog>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
