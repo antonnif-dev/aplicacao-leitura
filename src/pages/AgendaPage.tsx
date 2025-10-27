@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../hooks/useAuth';
@@ -23,7 +24,8 @@ interface TarefasAgrupadas {
 // Componentes UI e Ícones
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CalendarX2, XCircle } from 'lucide-react';
+//import { Loader2, CalendarX2, XCircle } from 'lucide-react';
+import { CalendarX2, XCircle } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, CalendarDays, Settings } from 'lucide-react';
