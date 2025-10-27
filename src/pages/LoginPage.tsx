@@ -120,14 +120,12 @@ export function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
+    <main className="flex flex-col min-h-screen items-center justify-center  bg-purple-400 dark:bg-gray-950 p-4">
+      <h1 className="mb-5 flex-wrap">Organizador de Estudos</h1>
       {/* --- Card de Login --- */}
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Acesse sua conta</CardTitle>
-          <CardDescription>
-            Digite seu e-mail e senha para continuar.
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>

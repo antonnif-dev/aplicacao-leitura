@@ -241,58 +241,59 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8 pb-20 sm:pb-24">
+    <div className="container mx-auto">
 
       <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Organizador</h1>
           <p className="text-muted-foreground text-sm sm:text-base">
             Olá, {user?.user_metadata.nome_completo || user?.email}!
           </p>
         </div>
-        {/* --- Botão Nova Matéria --- */}
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={openCreateDialog} className="w-full sm:w-auto">
-              <PlusCircle className="mr-2 h-4 w-4" /> Nova Matéria
-            </Button>
-          </DialogTrigger>
-          {/* Botão criar matéria -- DialogContent inteiro */}
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Criar Nova Matéria</DialogTitle>
-              <DialogDescription>Preencha os dados da sua nova matéria de estudos.</DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleCreate} className="grid gap-4 py-4">
-              {/* Inputs controlados */}
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="create-titulo" className="text-right">Título*</Label>
-                <Input id="create-titulo" value={tituloInput} onChange={(e) => setTituloInput(e.target.value)} required className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="create-descricao" className="text-right">Descrição</Label>
-                <Input id="create-descricao" value={descricaoInput} onChange={(e) => setDescricaoInput(e.target.value)} className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="create-tipo" className="text-right">Tipo</Label>
-                <Input id="create-tipo" value={tipoInput} onChange={(e) => setTipoInput(e.target.value)} placeholder="Ex: Revisão" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="create-prazo" className="text-right">Prazo</Label>
-                <Input id="create-prazo" type="datetime-local" value={prazoInput} onChange={(e) => setPrazoInput(e.target.value)} className="col-span-3" />
-              </div>
-              <DialogFooter>
-                <DialogClose asChild><Button type="button" variant="ghost">Cancelar</Button></DialogClose>
-                <Button type="submit">Salvar</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
+        <Dialog>
           {/* Botão logout -- Apenas 3 linhas */}
           <Button variant="outline" size="icon" onClick={handleLogout} className="flex-shrink-0" aria-label="Sair"> {/* Adicionado aria-label */}
             <LogOut className="h-4 w-4" />
           </Button>
         </Dialog>
       </header>
+
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogTrigger asChild>
+          <Button onClick={openCreateDialog} className="w-full sm:w-auto">
+            <PlusCircle className="mr-2 h-4 w-4" /> Nova Matéria
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Criar Nova Matéria</DialogTitle>
+            <DialogDescription>Preencha os dados da sua nova matéria de estudos.</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleCreate} className="grid gap-4 py-4">
+            {/* Inputs controlados */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="create-titulo" className="text-right">Título*</Label>
+              <Input id="create-titulo" value={tituloInput} onChange={(e) => setTituloInput(e.target.value)} required className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="create-descricao" className="text-right">Descrição</Label>
+              <Input id="create-descricao" value={descricaoInput} onChange={(e) => setDescricaoInput(e.target.value)} className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="create-tipo" className="text-right">Tipo</Label>
+              <Input id="create-tipo" value={tipoInput} onChange={(e) => setTipoInput(e.target.value)} placeholder="Ex: Revisão" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="create-prazo" className="text-right">Prazo</Label>
+              <Input id="create-prazo" type="datetime-local" value={prazoInput} onChange={(e) => setPrazoInput(e.target.value)} className="col-span-3" />
+            </div>
+            <DialogFooter>
+              <DialogClose asChild><Button type="button" variant="ghost">Cancelar</Button></DialogClose>
+              <Button type="submit">Salvar</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* --- Seção Em Andamento --- */}
       <section className="mb-10">
@@ -396,7 +397,6 @@ export function DashboardPage() {
                       <CalendarIcon className="inline-block h-3 w-3 mr-1" />
                       {formatarData(materia.prazo)}
                     </span>
-                    <span>ID: {materia.id}</span>
                   </CardFooter>
                 </Card>
               );

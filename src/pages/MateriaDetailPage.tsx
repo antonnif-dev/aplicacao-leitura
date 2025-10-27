@@ -159,18 +159,18 @@ export function MateriaDetailPage() {
 
   // Função para mudar apenas o status via API PATCH
   const handleTarefaStatusChange = async (tarefaId: number, novoStatus: Tarefa['status']) => {
-     try {
+    try {
       await api.patch(`/tarefas/${tarefaId}/status`, { status: novoStatus });
-       // Atualização otimista local
-       setTarefas(prev => prev.map(t => t.id === tarefaId ? { ...t, status: novoStatus } : t)
-                             .sort((a, b) => { // Reordena localmente
-                                const statusOrder = { 'pendente': 1, 'em andamento': 2, 'concluida': 3 };
-                                return (statusOrder[a.status] || 4) - (statusOrder[b.status] || 4);
-                              }));
+      // Atualização otimista local
+      setTarefas(prev => prev.map(t => t.id === tarefaId ? { ...t, status: novoStatus } : t)
+        .sort((a, b) => { // Reordena localmente
+          const statusOrder = { 'pendente': 1, 'em andamento': 2, 'concluida': 3 };
+          return (statusOrder[a.status] || 4) - (statusOrder[b.status] || 4);
+        }));
       // fetchData(); // Ou rebuscar tudo se a ordenação local for complexa
     } catch (err: any) {
-       console.error(`Erro ao mudar status da tarefa ${tarefaId}:`, err);
-       alert('Falha ao atualizar status da tarefa: ' + (err.response?.data?.error || err.message));
+      console.error(`Erro ao mudar status da tarefa ${tarefaId}:`, err);
+      alert('Falha ao atualizar status da tarefa: ' + (err.response?.data?.error || err.message));
     }
   };
 
@@ -213,7 +213,7 @@ export function MateriaDetailPage() {
       <div className="container mx-auto p-4 md:p-8 text-center">
         <p className="text-destructive mb-4">{error || 'Matéria não encontrada.'}</p>
         <Link to="/dashboard" className="text-primary hover:underline">
-          <ArrowLeft className="inline-block h-4 w-4 mr-1"/> Voltar para o Dashboard
+          <ArrowLeft className="inline-block h-4 w-4 mr-1" /> Voltar para o Dashboard
         </Link>
       </div>
     );
@@ -221,11 +221,11 @@ export function MateriaDetailPage() {
 
   // Renderiza a página principal
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8">
+    <div className="container mx-auto bg-white p-18">
       {/* --- Cabeçalho da Matéria --- */}
       <div className="mb-8 border-b pb-4">
         <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-primary mb-2 inline-block">
-          <ArrowLeft className="inline-block h-4 w-4 mr-1"/> Voltar
+          <ArrowLeft className="inline-block h-4 w-4 mr-1" /> Voltar
         </Link>
         <h1 className="text-3xl font-bold">{materia.titulo}</h1>
         <p className="text-muted-foreground">{materia.descricao || 'Sem descrição.'}</p>
@@ -233,8 +233,8 @@ export function MateriaDetailPage() {
           <span>Tipo: {materia.tipo || 'N/A'}</span>
           <span>Status: {materia.status === 'em andamento' ? 'Em Andamento' : 'Finalizada'}</span>
           <span>
-             <CalendarIcon className="inline-block h-4 w-4 mr-1"/>
-             Prazo: {formatarData(materia.prazo)}
+            <CalendarIcon className="inline-block h-4 w-4 mr-1" />
+            Prazo: {formatarData(materia.prazo)}
           </span>
         </div>
       </div>
@@ -267,33 +267,33 @@ export function MateriaDetailPage() {
                 <Card key={tarefa.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4">
                   <div className="flex-1 min-w-0"> {/* Conteúdo principal */}
                     <div className="flex items-center gap-2 mb-1">
-                       <StatusIcon className={`h-4 w-4 flex-shrink-0 ${statusColor}`} />
-                       <span className={`text-sm font-medium ${statusColor}`}>{statusLabel}</span>
+                      <StatusIcon className={`h-4 w-4 flex-shrink-0 ${statusColor}`} />
+                      <span className={`text-sm font-medium ${statusColor}`}>{statusLabel}</span>
                     </div>
                     <p className="font-semibold truncate">{tarefa.titulo}</p>
                     <p className="text-sm text-muted-foreground line-clamp-2">{tarefa.descricao || 'Sem descrição.'}</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                       <CalendarIcon className="inline-block h-3 w-3 mr-1"/>
-                       Prazo: {formatarData(tarefa.prazo)}
+                      <CalendarIcon className="inline-block h-3 w-3 mr-1" />
+                      Prazo: {formatarData(tarefa.prazo)}
                     </p>
                   </div>
                   <div className="flex-shrink-0 flex items-center gap-2 self-end sm:self-center"> {/* Botões de ação */}
-                     {/* Dropdown para mudar status rápido */}
-                     <Select
-                        value={tarefa.status}
-                        onValueChange={(newStatus: Tarefa['status']) => handleTarefaStatusChange(tarefa.id, newStatus)}
-                     >
-                        <SelectTrigger className="w-[150px] h-9 text-xs">
-                           <SelectValue placeholder="Mudar status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                           <SelectItem value="pendente">Pendente</SelectItem>
-                           <SelectItem value="em andamento">Em Andamento</SelectItem>
-                           <SelectItem value="concluida">Concluída</SelectItem>
-                        </SelectContent>
-                     </Select>
+                    {/* Dropdown para mudar status rápido */}
+                    <Select
+                      value={tarefa.status}
+                      onValueChange={(newStatus: Tarefa['status']) => handleTarefaStatusChange(tarefa.id, newStatus)}
+                    >
+                      <SelectTrigger className="w-[150px] h-9 text-xs">
+                        <SelectValue placeholder="Mudar status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pendente">Pendente</SelectItem>
+                        <SelectItem value="em andamento">Em Andamento</SelectItem>
+                        <SelectItem value="concluida">Concluída</SelectItem>
+                      </SelectContent>
+                    </Select>
 
-                     {/* Dropdown para Editar/Deletar */}
+                    {/* Dropdown para Editar/Deletar */}
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -310,21 +310,21 @@ export function MateriaDetailPage() {
                               Deletar Tarefa
                             </DropdownMenuItem>
                           </AlertDialogTrigger>
-                           <AlertDialogContent>
-                             <AlertDialogHeader>
-                               <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
-                               <AlertDialogDescription>
-                                 Tem certeza que deseja deletar esta tarefa? Esta ação não pode ser desfeita.
-                               </AlertDialogDescription>
-                             </AlertDialogHeader>
-                             <AlertDialogFooter>
-                               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                               <AlertDialogAction onClick={() => handleTarefaDelete(tarefa.id)} className="bg-destructive hover:bg-destructive/90">Deletar</AlertDialogAction>
-                             </AlertDialogFooter>
-                           </AlertDialogContent>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Tem certeza que deseja deletar esta tarefa? Esta ação não pode ser desfeita.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleTarefaDelete(tarefa.id)} className="bg-destructive hover:bg-destructive/90">Deletar</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
                         </AlertDialog>
-                         {/* Futuro: Item para Ver/Adicionar Progresso */}
-                         {/* <DropdownMenuSeparator />
+                        {/* Futuro: Item para Ver/Adicionar Progresso */}
+                        {/* <DropdownMenuSeparator />
                          <DropdownMenuItem onClick={() => alert(`Ver progresso da tarefa ${tarefa.id}`)}>
                             Ver Histórico
                          </DropdownMenuItem> */}
@@ -349,7 +349,7 @@ export function MateriaDetailPage() {
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleTarefaSubmit} className="grid gap-4 py-4">
-             {/* Inputs controlados */}
+            {/* Inputs controlados */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="tarefa-titulo" className="text-right">Título*</Label>
               <Input id="tarefa-titulo" value={tarefaTitulo} onChange={(e) => setTarefaTitulo(e.target.value)} required className="col-span-3" />
@@ -358,28 +358,28 @@ export function MateriaDetailPage() {
               <Label htmlFor="tarefa-descricao" className="text-right pt-2">Descrição</Label>
               <Textarea id="tarefa-descricao" value={tarefaDescricao} onChange={(e) => setTarefaDescricao(e.target.value)} className="col-span-3 min-h-[80px]" />
             </div>
-             <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="tarefa-status" className="text-right">Status*</Label>
-               <Select value={tarefaStatus} onValueChange={(value: Tarefa['status']) => setTarefaStatus(value)}>
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Selecione o status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pendente">Pendente</SelectItem>
-                    <SelectItem value="em andamento">Em Andamento</SelectItem>
-                    <SelectItem value="concluida">Concluída</SelectItem>
-                  </SelectContent>
-                </Select>
+              <Select value={tarefaStatus} onValueChange={(value: Tarefa['status']) => setTarefaStatus(value)}>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Selecione o status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pendente">Pendente</SelectItem>
+                  <SelectItem value="em andamento">Em Andamento</SelectItem>
+                  <SelectItem value="concluida">Concluída</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-             <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="tarefa-prazo" className="text-right">Prazo</Label>
               <div className="col-span-3 flex items-center gap-2">
-                 <Input id="tarefa-prazo" type="datetime-local" value={tarefaPrazo} onChange={(e) => setTarefaPrazo(e.target.value)} className="flex-1" />
-                 {tarefaPrazo && <Button type="button" variant="ghost" size="icon" onClick={() => setTarefaPrazo('')}><X className="h-4 w-4"/></Button>}
+                <Input id="tarefa-prazo" type="datetime-local" value={tarefaPrazo} onChange={(e) => setTarefaPrazo(e.target.value)} className="flex-1" />
+                {tarefaPrazo && <Button type="button" variant="ghost" size="icon" onClick={() => setTarefaPrazo('')}><X className="h-4 w-4" /></Button>}
               </div>
             </div>
             <DialogFooter>
-               <DialogClose asChild><Button type="button" variant="ghost">Cancelar</Button></DialogClose>
+              <DialogClose asChild><Button type="button" variant="ghost">Cancelar</Button></DialogClose>
               <Button type="submit">{currentTarefa ? 'Salvar Alterações' : 'Criar Tarefa'}</Button>
             </DialogFooter>
           </form>

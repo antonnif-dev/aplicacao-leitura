@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/services/supabase'; // Para chamar as funções de update
+import { supabase } from '@/services/supabase';
+import { LogOut, LayoutDashboard, CalendarDays, Settings } from 'lucide-react';
 
 // Componentes UI e Ícones
 import { Button } from '@/components/ui/button';
@@ -10,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 //import { Separator } from '@/components/ui/separator';
 import { Loader2, ArrowLeft } from 'lucide-react';
+import { Dialog } from '@/components/ui/dialog';
 
 export function AjustesPage() {
   //const { user, session } = useAuth();
@@ -49,7 +51,7 @@ export function AjustesPage() {
 
       if (error) throw error;
       setSuccessProfile('Perfil atualizado com sucesso!');
-       // Limpar mensagem após alguns segundos
+      // Limpar mensagem após alguns segundos
       setTimeout(() => setSuccessProfile(null), 3000);
 
     } catch (err: any) {
@@ -57,6 +59,17 @@ export function AjustesPage() {
       setErrorProfile(err.message || 'Falha ao atualizar perfil.');
     } finally {
       setLoadingProfile(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      navigate('/login', { replace: true });
+    } catch (err: any) {
+      console.error("Erro ao fazer logout:", err);
+      alert('Erro ao fazer logout: ' + err.message);
     }
   };
 
@@ -73,9 +86,9 @@ export function AjustesPage() {
       return;
     }
     if (newPassword.length < 7) { // Adicione a validação de regex se quiser
-       setErrorPassword('A nova senha deve ter no mínimo 7 caracteres.');
-       setLoadingPassword(false);
-       return;
+      setErrorPassword('A nova senha deve ter no mínimo 7 caracteres.');
+      setLoadingPassword(false);
+      return;
     }
 
     try {
@@ -91,7 +104,7 @@ export function AjustesPage() {
       //setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-       // Limpar mensagem após alguns segundos
+      // Limpar mensagem após alguns segundos
       setTimeout(() => setSuccessPassword(null), 3000);
 
     } catch (err: any) {
@@ -104,11 +117,12 @@ export function AjustesPage() {
 
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8 pb-20 sm:pb-24">
-      <header className="mb-8">
-         <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-primary mb-2 inline-block">
-          <ArrowLeft className="inline-block h-4 w-4 mr-1"/> Voltar
-        </Link>
+      <header className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl sm:text-3xl font-bold">Ajustes do Perfil</h1>
+        {/* Botão logout */}
+          <Button variant="outline" size="icon" onClick={handleLogout} className="flex-shrink-0" aria-label="Sair"> {/* Adicionado aria-label */}
+            <LogOut className="h-4 w-4 ml-1" />
+          </Button>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -137,13 +151,12 @@ export function AjustesPage() {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={loadingProfile}
+                  disabled
+                  className="disabled:opacity-50 disabled:cursor-not-allowed" // Classes opcionais para estilo visual
                 />
-                 <p className="text-xs text-muted-foreground">
-                   Alterar o e-mail exigirá confirmação no novo endereço.
-                 </p>
+                <p className="text-xs text-muted-foreground">
+                  O e-mail não pode ser alterado após o cadastro.
+                </p>
               </div>
               {errorProfile && <p className="text-sm text-destructive">{errorProfile}</p>}
               {successProfile && <p className="text-sm text-green-600">{successProfile}</p>}
@@ -193,13 +206,13 @@ export function AjustesPage() {
                   disabled={loadingPassword}
                 />
               </div>
-               <p className="text-xs text-muted-foreground">
-                  A senha deve ter no mínimo 7 caracteres, incluindo maiúscula, número e símbolo.
-                </p>
+              <p className="text-xs text-muted-foreground">
+                A senha deve ter no mínimo 7 caracteres, incluindo letra maiúscula, número e símbolo.
+              </p>
               {errorPassword && <p className="text-sm text-destructive">{errorPassword}</p>}
               {successPassword && <p className="text-sm text-green-600">{successPassword}</p>}
               <Button type="submit" className="w-full" disabled={loadingPassword}>
-                 {loadingPassword && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {loadingPassword && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {loadingPassword ? 'Alterando...' : 'Alterar Senha'}
               </Button>
             </form>
@@ -207,15 +220,51 @@ export function AjustesPage() {
         </Card>
 
       </div>
-       {/* Adiciona o footer de navegação aqui também */}
-       <footer className="fixed bottom-0 left-0 right-0 bg-background border-t p-1 sm:p-2 z-50">
-           <nav className="container mx-auto flex justify-around items-center h-14 sm:h-16">
-               {/* (Cole os botões da barra de navegação aqui) */}
-                <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} className={`...`}>...</Button>
-               <Button variant="ghost" size="sm" onClick={() => navigate('/agenda')} className={`...`}>...</Button>
-               <Button variant="ghost" size="sm" onClick={() => navigate('/ajustes')} className={`...`}>...</Button>
-           </nav>
-       </footer>
+      {/* Footer com ícones de navegação */}
+      <footer className="fixed bottom-0 left-0 right-0 bg-background border-t p-1 sm:p-2 z-50">
+        <nav className="container mx-auto flex justify-around items-center h-14 sm:h-16">
+          {/* Botão Dashboard */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/dashboard')}
+            // Destaca se o pathname for exatamente /dashboard ou /
+            className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname === '/dashboard' || location.pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`}
+            aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}
+          >
+            <LayoutDashboard className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Dashboard</span>
+          </Button>
+
+          {/* Botão Agenda */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/agenda')} // Garante que a navegação está correta
+            // Destaca se o pathname começar com /agenda
+            className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/agenda') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`}
+            aria-current={location.pathname.startsWith('/agenda') ? 'page' : undefined}
+          >
+            <CalendarDays className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Agenda</span>
+          </Button>
+
+          {/* Botão Ajustes */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/ajustes')} // Navega para a nova página
+            // Destaca se o pathname começar com /ajustes
+            className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/ajustes') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`}
+            aria-current={location.pathname.startsWith('/ajustes') ? 'page' : undefined}
+          >
+            <Settings className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Ajustes</span>
+          </Button>
+        </nav>
+      </footer>
+      {/* Padding inferior no container principal para compensar a barra */}
+      <div className="pb-20 sm:pb-24"></div>
     </div>
   );
 }

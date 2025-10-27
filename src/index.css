@@ -61,10 +61,12 @@ a:hover {
 }
 
 body {
+  background-color: var(--color-purple-400);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 2rem;
 }
 
 h1 {
@@ -79,7 +81,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #002fff;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -91,6 +93,12 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+header {}
+
+footer {
+  background-color: rgba(0, 0, 0, 0.575);
 }
 
 @media (prefers-color-scheme: light) {
