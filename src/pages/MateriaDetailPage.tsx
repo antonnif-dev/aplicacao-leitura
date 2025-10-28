@@ -301,12 +301,23 @@ export function MateriaDetailPage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => openEditTarefaDialog(tarefa)}>
+                         {/* Item Corrigido */}
+                        <DropdownMenuItem
+                          onSelect={(event) => {
+                            event.preventDefault();
+                            openEditTarefaDialog(tarefa);
+                          }}
+                        >
                           Editar Tarefa
                         </DropdownMenuItem>
+
+                         {/* Item Deletar (onSelect já estava correto) */}
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-red-600 focus:text-red-700 focus:bg-red-100">
+                            <DropdownMenuItem
+                              onSelect={(e) => e.preventDefault()} // Mantém como estava
+                              className="text-red-600 focus:text-red-700 focus:bg-red-100"
+                            >
                               Deletar Tarefa
                             </DropdownMenuItem>
                           </AlertDialogTrigger>
@@ -319,15 +330,16 @@ export function MateriaDetailPage() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              {/* onClick na Ação do AlertDialog está correto */}
                               <AlertDialogAction onClick={() => handleTarefaDelete(tarefa.id)} className="bg-destructive hover:bg-destructive/90">Deletar</AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
                         {/* Futuro: Item para Ver/Adicionar Progresso */}
-                        {/* <DropdownMenuSeparator />
-                         <DropdownMenuItem onClick={() => alert(`Ver progresso da tarefa ${tarefa.id}`)}>
-                            Ver Histórico
-                         </DropdownMenuItem> */}
+                        {/* <DropdownMenuSeparator /> */}
+                        {/* <DropdownMenuItem onSelect={(e) => { e.preventDefault(); alert(`Ver progresso da tarefa ${tarefa.id}`); }}>
+                           Ver Histórico
+                        </DropdownMenuItem> */}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>

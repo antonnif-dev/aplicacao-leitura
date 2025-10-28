@@ -236,7 +236,7 @@ export function AjustesPage() {
             aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}
           >
             <LayoutDashboard className="h-5 w-5 mb-0.5" />
-            <span className="text-[10px] sm:text-xs">Dashboard</span>
+            <span className="text-[10px] sm:text-xs">Organizador</span>
           </Button>
 
           {/* Botão Agenda */}

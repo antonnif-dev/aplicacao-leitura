@@ -231,7 +231,7 @@ export function AgendaPage() {
           {/* Botão Dashboard */}
           <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname === '/dashboard' || location.pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}>
             <LayoutDashboard className="h-5 w-5 mb-0.5" />
-            <span className="text-[10px] sm:text-xs">Dashboard</span>
+            <span className="text-[10px] sm:text-xs">Organizador</span>
           </Button>
           {/* Botão Agenda */}
           <Button variant="ghost" size="sm" onClick={() => navigate('/agenda')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/agenda') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname.startsWith('/agenda') ? 'page' : undefined}>

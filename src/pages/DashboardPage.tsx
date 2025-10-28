@@ -302,7 +302,7 @@ export function DashboardPage() {
             <p className="text-muted-foreground col-span-full">Nenhuma matéria em andamento.</p>
           ) : (
             materiasEmAndamento.map((materia) => {
-              const tarefasDaMateria = tarefas.filter(t => t.materiaId === materia.id); // Ajuste 'materiaId'
+              const tarefasDaMateria = tarefas.filter(t => t.materiaId === materia.id);
 
               return (
                 <Card key={materia.id} className={`flex flex-col border-l-4 ${tipoCores[materia.tipo || 'default'] || tipoCores.default}`}>
@@ -319,18 +319,36 @@ export function DashboardPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => navigate(`/materias/${materia.id}`)}>
+                          <DropdownMenuItem
+                            onSelect={(event) => {
+                              event.preventDefault();
+                              navigate(`/materias/${materia.id}`);
+                            }}
+                          >
                             <ListTodo className="mr-2 h-4 w-4" /> Ver/Gerenciar Tarefas
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => openEditDialog(materia)}>
+                          <DropdownMenuItem
+                            onSelect={(event) => {
+                              event.preventDefault();
+                              openEditDialog(materia);
+                            }}
+                          >
                             Editar Matéria
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusChange(materia.id, 'finalizado')}>
+                          <DropdownMenuItem
+                            onSelect={(event) => {
+                              event.preventDefault();
+                              handleStatusChange(materia.id, 'finalizado');
+                            }}
+                          >
                             <CheckCircle className="mr-2 h-4 w-4 text-green-600" /> Marcar como Concluída
                           </DropdownMenuItem>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-red-600 focus:text-red-700 focus:bg-red-100">
+                              <DropdownMenuItem
+                                onSelect={(e) => e.preventDefault()}
+                                className="text-red-600 focus:text-red-700 focus:bg-red-100"
+                              >
                                 Deletar Matéria
                               </DropdownMenuItem>
                             </AlertDialogTrigger>
@@ -488,7 +506,7 @@ export function DashboardPage() {
             aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}
           >
             <LayoutDashboard className="h-5 w-5 mb-0.5" />
-            <span className="text-[10px] sm:text-xs">Dashboard</span>
+            <span className="text-[10px] sm:text-xs">Organizador</span>
           </Button>
 
           {/* Botão Agenda */}
