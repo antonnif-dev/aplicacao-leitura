@@ -242,7 +242,6 @@ export function DashboardPage() {
 
   return (
     <div className="container mx-auto">
-
       <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">Organizador</h1>

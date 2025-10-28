@@ -119,8 +119,8 @@ export function LoginPage() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center  bg-purple-400 dark:bg-gray-950 p-4">
-      <h1 className="mb-5 flex-wrap">Organizador de Estudos</h1>
+    <main className="container mx-auto flex flex-col min-h-screen items-center justify-center  bg-purple-400 dark:bg-gray-950 p-4">
+      <h1 className="mb-5 flex-wrap text-center font-bold">Organizador de Estudos</h1>
       {/* --- Card de Login --- */}
       <Card className="w-full max-w-sm">
         <CardHeader>

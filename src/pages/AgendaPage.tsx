@@ -58,16 +58,16 @@ const formatarApenasHorario = (isoString: string | null | undefined): string | n
 };
 
 const formatarParaYYYYMMDD = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export function AgendaPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const {} = useAuth(); // Apenas para garantir que o usuário está logado via ProtectedRoute
+  const { } = useAuth(); // Apenas para garantir que o usuário está logado via ProtectedRoute
   const [tarefasComPrazo, setTarefasComPrazo] = useState<Tarefa[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,11 +85,11 @@ export function AgendaPage() {
 
         const datesSet = new Set<string>();
         filtradas.forEach(t => {
-            try {
-                const taskDate = new Date(t.prazo!);
-                taskDate.setHours(0, 0, 0, 0);
-                datesSet.add(formatarParaYYYYMMDD(taskDate));
-            } catch {}
+          try {
+            const taskDate = new Date(t.prazo!);
+            taskDate.setHours(0, 0, 0, 0);
+            datesSet.add(formatarParaYYYYMMDD(taskDate));
+          } catch { }
         });
         setDaysWithTasks(Array.from(datesSet).map(dateStr => new Date(dateStr + 'T12:00:00.000Z')));
 
@@ -156,7 +156,7 @@ export function AgendaPage() {
   if (error) { /* ... Error ... */ }
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8 pb-20 sm:pb-24">
+    <div className="container mx-auto">
       <header className="mb-6 text-center">
         <h1 className="text-2xl sm:text-3xl font-bold">Agenda</h1>
         <p className="text-muted-foreground">Visualize suas tarefas com prazo.</p>
@@ -174,22 +174,22 @@ export function AgendaPage() {
         />
       </div>
 
-       {/* --- Título Dinâmico da Lista e Botão Limpar --- */}
-       <div className="flex items-center justify-between mb-4 border-b pb-2">
-         <h2 className="text-lg font-semibold">{tituloLista}</h2>
-         {mostrarBotaoLimpar && (
-           <Button variant="ghost" size="sm" onClick={() => setSelectedDate(undefined)}>
-             <XCircle className="h-4 w-4 mr-1 text-muted-foreground"/> Limpar Seleção
-           </Button>
-         )}
-       </div>
+      {/* --- Título Dinâmico da Lista e Botão Limpar --- */}
+      <div className="flex items-center justify-between mb-4 border-b pb-2">
+        <h2 className="text-lg font-semibold">{tituloLista}</h2>
+        {mostrarBotaoLimpar && (
+          <Button variant="ghost" size="sm" onClick={() => setSelectedDate(undefined)}>
+            <XCircle className="h-4 w-4 mr-1 text-muted-foreground" /> Limpar Seleção
+          </Button>
+        )}
+      </div>
 
       {/* --- Lista de Tarefas Filtrada --- */}
       {datasParaExibir.length === 0 && !isLoading ? (
-         <div className="text-center text-muted-foreground mt-6">
-            <CalendarX2 className="h-10 w-10 mx-auto mb-3"/>
-             {selectedDate ? <p>Nenhuma tarefa agendada para este dia.</p> : <p>Nenhuma tarefa com prazo encontrada.</p>}
-         </div>
+        <div className="text-center text-muted-foreground mt-6">
+          <CalendarX2 className="h-10 w-10 mx-auto mb-3" />
+          {selectedDate ? <p>Nenhuma tarefa agendada para este dia.</p> : <p>Nenhuma tarefa com prazo encontrada.</p>}
+        </div>
       ) : (
         <div className="space-y-6">
           {/* *** CORREÇÃO: datasOrdenadas é usado aqui *** */}
@@ -197,7 +197,7 @@ export function AgendaPage() {
             <div key={data}>
               {!selectedDate && <h3 className="text-md font-medium mb-2">{data}</h3>}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                 {/* Adicionado '?' para segurança caso data seja inválida */}
+                {/* Adicionado '?' para segurança caso data seja inválida */}
                 {tarefasAgrupadas[data]?.map((tarefa: Tarefa) => (
                   <Card key={tarefa.id} className="shadow-sm hover:shadow-md transition-shadow">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -210,12 +210,12 @@ export function AgendaPage() {
                       <p className="text-xs text-muted-foreground line-clamp-3">
                         {tarefa.descricao || 'Sem descrição'}
                       </p>
-                       <Link
-                          to={`/materias/${tarefa.materiaId}`}
-                          className="text-xs text-blue-600 hover:underline mt-2 block"
-                        >
-                          Ver Matéria &rarr;
-                        </Link>
+                      <Link
+                        to={`/materias/${tarefa.materiaId}`}
+                        className="text-xs text-blue-600 hover:underline mt-2 block"
+                      >
+                        Ver Matéria &rarr;
+                      </Link>
                     </CardContent>
                   </Card>
                 ))}
@@ -227,23 +227,23 @@ export function AgendaPage() {
 
       {/* --- Navegação Inferior --- */}
       <footer className="fixed bottom-0 left-0 right-0 bg-background border-t p-1 sm:p-2 z-50">
-           <nav className="container mx-auto flex justify-around items-center h-14 sm:h-16">
-               {/* Botão Dashboard */}
-               <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname === '/dashboard' || location.pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}>
-                  <LayoutDashboard className="h-5 w-5 mb-0.5" />
-                  <span className="text-[10px] sm:text-xs">Dashboard</span>
-               </Button>
-               {/* Botão Agenda */}
-                <Button variant="ghost" size="sm" onClick={() => navigate('/agenda')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/agenda') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname.startsWith('/agenda') ? 'page' : undefined}>
-                  <CalendarDays className="h-5 w-5 mb-0.5" />
-                  <span className="text-[10px] sm:text-xs">Agenda</span>
-                </Button>
-               {/* Botão Ajustes */}
-               <Button variant="ghost" size="sm" onClick={() => navigate('/ajustes')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/ajustes') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname.startsWith('/ajustes') ? 'page' : undefined}>
-                  <Settings className="h-5 w-5 mb-0.5" />
-                  <span className="text-[10px] sm:text-xs">Ajustes</span>
-               </Button>
-           </nav>
+        <nav className="container mx-auto flex justify-around items-center h-14 sm:h-16">
+          {/* Botão Dashboard */}
+          <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname === '/dashboard' || location.pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname === '/dashboard' || location.pathname === '/' ? 'page' : undefined}>
+            <LayoutDashboard className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Dashboard</span>
+          </Button>
+          {/* Botão Agenda */}
+          <Button variant="ghost" size="sm" onClick={() => navigate('/agenda')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/agenda') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname.startsWith('/agenda') ? 'page' : undefined}>
+            <CalendarDays className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Agenda</span>
+          </Button>
+          {/* Botão Ajustes */}
+          <Button variant="ghost" size="sm" onClick={() => navigate('/ajustes')} className={`flex flex-col h-full justify-center px-2 py-1 ${location.pathname.startsWith('/ajustes') ? 'text-primary' : 'text-muted-foreground hover:text-foreground/80'}`} aria-current={location.pathname.startsWith('/ajustes') ? 'page' : undefined}>
+            <Settings className="h-5 w-5 mb-0.5" />
+            <span className="text-[10px] sm:text-xs">Ajustes</span>
+          </Button>
+        </nav>
       </footer>
     </div>
   );

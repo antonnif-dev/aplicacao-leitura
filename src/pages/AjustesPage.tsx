@@ -117,7 +117,7 @@ export function AjustesPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8 pb-20 sm:pb-24">
+    <div className="container mx-auto">
       <header className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl sm:text-3xl font-bold">Ajustes do Perfil</h1>
         {/* Botão logout */}
